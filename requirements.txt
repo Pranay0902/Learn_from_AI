@@ -1,3 +1,6 @@
 pytube=15.0.0
 youtube_transcript_api=0.6.0
 streamlit
+torch
+transformers
+nltk

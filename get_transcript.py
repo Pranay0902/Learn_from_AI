@@ -70,30 +70,12 @@ def raw_transcript_time_estimator(start_idx, end_idx, raw_transcript):
         
         info_dict['start_time'].append(e['start'])
         info_dict['end_time'].append(e['start'] + e['duration'])
-        
-#     print(info_dict)
-    
-#     i = 0
-#     j = 0
-    
-#     for idx, s in enumerate(info_dict['start_idx']):
-#         if start_idx > s:
-#             continue
-#         elif start_idx == s:
-#             i = idx
-#         else:
-#             i = idx - 1 if idx > 0 else 0
-    
-#     for idx, e in enumerate(info_dict['end_idx'][i:]):
-#         if end_idx > e:
-#             continue
-#         else:
-#             j = idx + i
+
     i, j = binary_search(info_dict['start_idx'], start_idx), binary_search(info_dict['start_idx'][1:] + [len(raw_transcript[-1]['text'])], end_idx)
-    
-#     print(i, j)
-    
+
     return info_dict['start_time'][i], info_dict['end_time'][j]
+
+
 
 if __name__ == '__main__':
     URL = 'https://www.youtube.com/watch?v=dRIhrn8cc9w'
@@ -101,15 +83,15 @@ if __name__ == '__main__':
     
     raw_transcript, context, summarized_text = get_transcript_summary(URL)
     
-    pprint(context)
+    pprint(summarized_text)
     
     from qa_system import *
 
     
     qa_list = generate_question_answer(context)
-    print(qa_list)
+#     print(qa_list)
     css = estimate_question_toughness(qa_list, context)
-    print(css)
+#     print(css)
     j = best_question(css, 5)
     print(j)
     
